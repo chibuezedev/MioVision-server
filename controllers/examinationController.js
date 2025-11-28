@@ -43,6 +43,7 @@ exports.getExaminations = async (req, res, next) => {
     const total = await Examination.countDocuments(query);
     const examinations = await Examination.find(query)
       .populate("patientId createdBy")
+      .populate("patientId")
       .sort({ examinationDate: -1 })
       .skip(skip)
       .limit(limit);

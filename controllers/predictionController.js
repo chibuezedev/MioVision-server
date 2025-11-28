@@ -27,13 +27,13 @@ exports.createPrediction = async (req, res, next) => {
       examinationId: examination._id,
     });
 
-    if (prediction) {
-      return res.json({
-        success: true,
-        data: prediction,
-        message: "Prediction already exists",
-      });
-    }
+    // if (prediction) {
+    //   return res.json({
+    //     success: true,
+    //     data: prediction,
+    //     message: "Prediction already exists",
+    //   });
+    // }
 
     // Download image temporarily for ML prediction
     const axios = require("axios");
