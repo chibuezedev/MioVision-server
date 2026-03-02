@@ -40,7 +40,7 @@ exports.createPrediction = async (req, res, next) => {
     const fs = require("fs");
     const path = require("path");
 
-    const tempPath = path.join("uploads", `temp-${Date.now()}.jpg`);
+    const tempPath = path.join("/tmp", `temp-${Date.now()}.jpg`);
     const writer = fs.createWriteStream(tempPath);
 
     const response = await axios({
