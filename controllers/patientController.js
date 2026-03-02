@@ -8,6 +8,8 @@ exports.createPatient = async (req, res, next) => {
       ...req.body,
       hospitalId: req.user.hospitalId,
     };
+    
+    delete patientData._id;
 
     const patient = await Patient.create(patientData);
 
