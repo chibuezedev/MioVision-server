@@ -4,7 +4,7 @@ const fs = require("fs");
 
 class MLService {
   constructor() {
-    this.baseURL = process.env.ML_MODEL_URL || "http://localhost:8000";
+    this.baseURL = "https://miovision-model.onrender.com";
   }
 
   async predictMyopia(imagePath) {
