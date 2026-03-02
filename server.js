@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const axios = require("axios");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -47,6 +48,18 @@ app.get("/health", (req, res) => {
     message: "Server is running",
     timestamp: new Date().toISOString(),
   });
+});
+
+
+app.get("/api/health-ml", async (req, res) => {
+  try {
+    await axios.get("https://miovision-model.onrender.com/health", {
+      timeout: 8000,
+    });
+    res.json({ status: "warm" });
+  } catch {
+    res.json({ status: "cold - warming up" });
+  }
 });
 
 app.use("/api/auth", require("./routes/auth"));
