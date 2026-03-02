@@ -10,8 +10,8 @@ exports.createExamination = async (req, res, next) => {
       examinationDate: new Date(),
     };
 
-    if (req.file) {
-      const uploadResult = await cloudinaryService.uploadImage(req.file.path);
+   if (req.file) {
+  const uploadResult = await cloudinaryService.uploadImage(req.file.buffer);
       examinationData.imageUrl = uploadResult.url;
       examinationData.imagePublicId = uploadResult.publicId;
     }
