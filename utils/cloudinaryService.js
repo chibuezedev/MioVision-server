@@ -1,26 +1,20 @@
 const cloudinary = require("../config/cloudinary");
-const fs = require("fs");
 
 class CloudinaryService {
-  async uploadImage(filePath, folder = "myopia-examinations") {
-    try {
-      const result = await cloudinary.uploader.upload(filePath, {
-        folder: folder,
-        resource_type: "image",
-      });
-
-      fs.unlinkSync(filePath);
-
-      return {
-        url: result.secure_url,
-        publicId: result.public_id,
-      };
-    } catch (error) {
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-      throw new Error("Failed to upload image to Cloudinary");
-    }
+  async uploadImage(fileBuffer, folder = "myopia-examinations") {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder, resource_type: "image" },
+        (error, result) => {
+          if (error) return reject(new Error("Failed to upload image to Cloudinary"));
+          resolve({
+            url: result.secure_url,
+            publicId: result.public_id,
+          });
+        }
+      );
+      uploadStream.end(fileBuffer);
+    });
   }
 
   async deleteImage(publicId) {
